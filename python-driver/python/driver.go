@@ -325,7 +325,6 @@ func (d *Driver) StartTask(cfg *drivers.TaskConfig) (*drivers.TaskHandle, *drive
 		Env:              cfg.EnvList(),
 		User:             user,
 		ResourceLimits:   true,
-		NoPivotRoot:      d.config.NoPivotRoot,
 		Resources:        cfg.Resources,
 		TaskDir:          cfg.TaskDir().Dir,
 		StdoutPath:       cfg.StdoutPath,
