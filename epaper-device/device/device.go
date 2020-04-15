@@ -148,6 +148,12 @@ func (d *InkyPHatPlugin) Reserve(deviceIDs []string) (*device.ContainerReservati
 		resp.Envs["INKYPHAT_HEIGHT"] = fmt.Sprint(inkyphat.height)
 		resp.Envs["INKYPHAT_WIDTH"] = fmt.Sprint(inkyphat.width)
 		resp.Envs["INKYPHAT_COLOR"] = inkyphat.color
+
+		resp.Devices = append(resp.Devices, &device.DeviceSpec{
+			TaskPath:    "/dev/gpiomem",
+			HostPath:    "/dev/gpiomem",
+			CgroupPerms: "rw",
+		})
 	}
 
 	return resp, nil
