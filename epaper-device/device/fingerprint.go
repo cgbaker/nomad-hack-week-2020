@@ -113,7 +113,7 @@ func parseInkyPHatStatus(infoString string) (width, height int, color string) {
 					}
 				}
 			case "color":
-				color = strings.TrimSpace(split[2])
+				color = strings.TrimSpace(split[1])
 			}
 		}
 	}
