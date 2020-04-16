@@ -156,6 +156,21 @@ func (d *InkyPHatPlugin) Reserve(deviceIDs []string) (*device.ContainerReservati
 				CgroupPerms: "rw",
 			},
 			&device.DeviceSpec{
+				TaskPath:    "/dev/gpiochip0",
+				HostPath:    "/dev/gpiochip0",
+				CgroupPerms: "rw",
+			},
+			&device.DeviceSpec{
+				TaskPath:    "/dev/gpiochip1",
+				HostPath:    "/dev/gpiochip1",
+				CgroupPerms: "rw",
+			},
+			&device.DeviceSpec{
+				TaskPath:    "/dev/gpiochip2",
+				HostPath:    "/dev/gpiochip2",
+				CgroupPerms: "rw",
+			},
+			&device.DeviceSpec{
 				TaskPath:    "/dev/spidev0.0",
 				HostPath:    "/dev/spidev0.0",
 				CgroupPerms: "rw",
