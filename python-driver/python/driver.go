@@ -324,8 +324,9 @@ func (d *Driver) StartTask(cfg *drivers.TaskConfig) (*drivers.TaskHandle, *drive
 		Args:             args,
 		Env:              cfg.EnvList(),
 		User:             user,
-		ResourceLimits:   true,
-		Resources:        cfg.Resources,
+		// this is interfering with the epaper device... timing?
+		// ResourceLimits:   false,
+		// Resources:        cfg.Resources,
 		TaskDir:          cfg.TaskDir().Dir,
 		StdoutPath:       cfg.StdoutPath,
 		StderrPath:       cfg.StderrPath,
