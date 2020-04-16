@@ -304,7 +304,7 @@ func (d *Driver) StartTask(cfg *drivers.TaskConfig) (*drivers.TaskHandle, *drive
 	executorConfig := &executor.ExecutorConfig{
 		LogFile:     pluginLogFile,
 		LogLevel:    "debug",
-		FSIsolation: true,
+		// FSIsolation: true,
 	}
 
 	exec, pluginClient, err := executor.CreateExecutor(
@@ -324,14 +324,14 @@ func (d *Driver) StartTask(cfg *drivers.TaskConfig) (*drivers.TaskHandle, *drive
 		Args:             args,
 		Env:              cfg.EnvList(),
 		User:             user,
-		ResourceLimits:   true,
-		Resources:        cfg.Resources,
+		// ResourceLimits:   true,
+		// Resources:        cfg.Resources,
 		TaskDir:          cfg.TaskDir().Dir,
 		StdoutPath:       cfg.StdoutPath,
 		StderrPath:       cfg.StderrPath,
-		Mounts:           cfg.Mounts,
-		Devices:          cfg.Devices,
-		NetworkIsolation: cfg.NetworkIsolation,
+		// Mounts:           cfg.Mounts,
+		// Devices:          cfg.Devices,
+		// NetworkIsolation: cfg.NetworkIsolation,
 	}
 
 	ps, err := exec.Launch(execCmd)
