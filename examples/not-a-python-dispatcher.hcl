@@ -1,10 +1,6 @@
-job "python-dispatcher" {
+job "not-a-python-dispatcher" {
   datacenters = ["thenest"]
   type = "batch"
-  meta {
-    python-dispatcher = "true"
-    support-artifacts = "false"
-  }
   parameterized {
     payload       = "required"
     meta_required = []

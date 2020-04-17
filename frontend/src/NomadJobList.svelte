@@ -2,7 +2,6 @@
   import { Select } from "smelte";
   import { onMount } from "svelte";
 
-
   export let nomadBaseUrl = 'http://localhost:4646';
 
   let parametrizedJobs;

@@ -4,16 +4,22 @@
   import { Button } from "smelte";
   import CodeWindow from "./CodeWindow.svelte";
   import NomadJobList from "./NomadJobList.svelte";
+  import NomadJob from "./NomadJob.svelte";
   import JobDispatcher from "./JobDispatcher.svelte";
+  import ArtifactList from "./ArtifactList.svelte";
+
   export let nomadBaseUrl = 'http://localhost:4646'
-  let selectedJob;
+  let selectedJob = null;
   let jobDispatcher;
   let dispatchInProgress;
   let code = '';
-  $: loc = code.trim().length > 0 ? code.split(/\r\n|\r|\n/).length : 0;
+  let loc;
+  let jobSupportsArtifacts;
+  let jobIsPythonDispatcher;
+  let artifacts;
 
   function doDispatch() {
-    jobDispatcher.dispatch(code);
+    jobDispatcher.dispatch(code, artifacts);
   }
 </script>
 
@@ -21,13 +27,18 @@
   <h1>Nomad Python Dispatcher</h1>
   <NomadJobList bind:selectedJob={selectedJob} {nomadBaseUrl}/>
 
-  {#if selectedJob != ""}
-    <small>{loc} lines of code</small>
-    <CodeWindow bind:value={code} rows=10/>
-
-    <Button on:click="{doDispatch}" disabled={!loc || dispatchInProgress}>Submit Code</Button>
-
-    <JobDispatcher bind:nomadBaseUrl={nomadBaseUrl} bind:targetJob={selectedJob} bind:this={jobDispatcher} bind:inProgress={dispatchInProgress}/>
+  {#if selectedJob}
+    <NomadJob {nomadBaseUrl} jobName={selectedJob} bind:supportsArtifacts={jobSupportsArtifacts} bind:isPythonDispatcher={jobIsPythonDispatcher}/>
+    {#if !jobIsPythonDispatcher}
+    <h6 class="text-error-500">Selected job is not a Python Dispatcher</h6>
+    {:else}
+    {#if jobSupportsArtifacts}
+    <ArtifactList bind:artifacts={artifacts} />  
+    {/if}
+    <CodeWindow bind:value={code} bind:loc={loc} rows=10/>
+    <Button on:click="{doDispatch}" disabled={!loc || dispatchInProgress || !jobIsPythonDispatcher}>Submit Code</Button>
+    <JobDispatcher {nomadBaseUrl} bind:targetJob={selectedJob} bind:this={jobDispatcher} bind:inProgress={dispatchInProgress}/>
+    {/if}
   {/if}
 </main>
 

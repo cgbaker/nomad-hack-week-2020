@@ -28,12 +28,12 @@
     allocOutput = null;
   }
 
-  async function _dispatchJob(payload) {
+  async function _dispatchJob(body) {
     let dispatchUrl = nomadBaseUrl + "/v1/job/" + targetJob + "/dispatch";
     return fetch(dispatchUrl, {
       mode: 'cors',
       method: 'POST',
-      body: JSON.stringify(payload),
+      body: JSON.stringify(body),
     }).then(r => r.json())
       .then(resp => {
         dispatchJobId = resp.DispatchedJobID;
@@ -109,13 +109,20 @@
     }).then(r => r.text()) 
   }
 
-  export async function dispatch(code) {
+  export async function dispatch(code, artifacts) {
     if (inProgress) return;
     clear();
     inProgress = true;
     console.log("starting dispatch")
+    let body = {
+      Payload: btoa(code),
+      Meta: {},
+    };
+    if (artifacts && artifacts.length) {
+      body.Meta.artifacts = artifacts.join(",");
+    }
     return await 
-        _dispatchJob({Payload: btoa(code)})
+        _dispatchJob(body)
         .then(resp => _monitorEval(resp.EvalID, resp.EvalCreateIndex))
         .then(evalId => _getEvalAlloc(evalId))
         .then(alloc => _monitorAlloc(alloc))
