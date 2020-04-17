@@ -100,7 +100,7 @@
   function _getOutput(alloc) {
     console.log("getting output from " + alloc.ID);
     let type = "stdout";
-    if (alloc.Failed) {
+    if (alloc.ClientStatus == "failed") {
       type = "stderr";
     }
     let url = nomadBaseUrl + "/v1/client/fs/logs/" + alloc.ID + "?task=dispatcher&plain=true&type=" + type;
@@ -135,7 +135,6 @@
 </script>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
 
 {#if dispatchJobId}
 <p class="top-space">Dispatched Job ID: <a target=_blank href="{

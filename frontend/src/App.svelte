@@ -14,8 +14,8 @@
   let dispatchInProgress;
   let code = '';
   let loc;
-  let jobSupportsArtifacts;
-  let jobIsPythonDispatcher;
+  let supportsArtifacts;
+  let isPythonDispatcher;
   let artifacts;
 
   function doDispatch() {
@@ -25,18 +25,19 @@
 
 <main>
   <h1>Nomad Python Dispatcher</h1>
-  <NomadJobList bind:selectedJob={selectedJob} {nomadBaseUrl}/>
+  <h6>{nomadBaseUrl}</h6>
+  <NomadJobList bind:selectedJob {nomadBaseUrl}/>
 
   {#if selectedJob}
-    <NomadJob {nomadBaseUrl} jobName={selectedJob} bind:supportsArtifacts={jobSupportsArtifacts} bind:isPythonDispatcher={jobIsPythonDispatcher}/>
-    {#if !jobIsPythonDispatcher}
+    <NomadJob {nomadBaseUrl} jobName={selectedJob} bind:supportsArtifacts bind:isPythonDispatcher/>
+    {#if !isPythonDispatcher}
     <h6 class="text-error-500">Selected job is not a Python Dispatcher</h6>
     {:else}
-    {#if jobSupportsArtifacts}
-    <ArtifactList bind:artifacts={artifacts} />  
+    {#if supportsArtifacts}
+    <ArtifactList bind:artifacts/>  
     {/if}
-    <CodeWindow bind:value={code} bind:loc={loc} rows=10/>
-    <Button on:click="{doDispatch}" disabled={!loc || dispatchInProgress || !jobIsPythonDispatcher}>Submit Code</Button>
+    <CodeWindow bind:disabled={dispatchInProgress} bind:value={code} bind:loc rows=10/>
+    <Button on:click="{doDispatch}" disabled={!loc || dispatchInProgress || !isPythonDispatcher}>Submit Code</Button>
     <JobDispatcher {nomadBaseUrl} bind:targetJob={selectedJob} bind:this={jobDispatcher} bind:inProgress={dispatchInProgress}/>
     {/if}
   {/if}

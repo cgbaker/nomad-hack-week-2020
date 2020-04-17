@@ -1,5 +1,6 @@
 <script> 
   import "smelte/src/tailwind.css" ;
+  import { onDestroy } from 'svelte';
   import { TextField } from "smelte";
   import { Button } from "smelte";
   import { Icon } from "smelte";
@@ -15,6 +16,10 @@
       console.log("artifacts: " + artifacts);
     }
   }
+ 
+  onDestroy(() => {
+    artifacts = [];
+  });
 </script>
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
