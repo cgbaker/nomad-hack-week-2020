@@ -1,7 +1,7 @@
 <script>
   import { onMount, afterUpdate  } from "svelte";
 
-  export let nomadBaseUrl = 'http://localhost:4646';
+  export let nomadBaseUrl;
   export let jobName;
 
   export let job = null;

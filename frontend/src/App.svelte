@@ -8,7 +8,8 @@
   import JobDispatcher from "./JobDispatcher.svelte";
   import ArtifactList from "./ArtifactList.svelte";
 
-  export let nomadBaseUrl = 'http://localhost:4646'
+  const nomadBaseUrl = 'NOMAD_ADDR';
+
   let selectedJob = null;
   let jobDispatcher;
   let dispatchInProgress;
@@ -25,7 +26,7 @@
 
 <main>
   <h1>Nomad Python Dispatcher</h1>
-  <h6>{nomadBaseUrl}</h6>
+  <h6 class="pb-1 mb-1">{nomadBaseUrl}</h6>
   <NomadJobList bind:selectedJob {nomadBaseUrl}/>
 
   {#if selectedJob}
